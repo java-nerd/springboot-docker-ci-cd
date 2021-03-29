@@ -33,6 +33,7 @@ services:
       - 5432:5432
     #should match with the application.properties file in SpringBoot App
     environment:
+      #values are read by the container at the run time
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
       - POSTGRES_DB=mydb
