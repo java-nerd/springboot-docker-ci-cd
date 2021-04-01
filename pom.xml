@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.aj.springboot</groupId>
-    <artifactId>springboot-docker-CI-CD</artifactId>
+    <artifactId>springboot-docker-jib</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>springboot-docker-CI-CD</name>
-    <description>Demo project for Spring Boot and Docker Using CI/CD</description>
+    <name>springboot-docker-jib</name>
+    <description>Spring Boot with Docker and JIB</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
@@ -30,20 +30,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>2.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.14</version>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -51,8 +37,30 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>2.6.0</version>
+                <configuration>
+                    <!--Define the image name and the registry to be used,
+                     Credentials needs to be passed via Maven Settings or Docker Env-->
+                    <to>
+                        <image>registry.hub.docker.com/h1326733/demo</image>
+                    </to>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>tag</id>
+                        <!--Tagging the image build and push process to maven goal package -->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-        <finalName>springboot-docker-ci-cd</finalName>
+        <finalName>springboot-docker-jib</finalName>
     </build>
 
 </project>
